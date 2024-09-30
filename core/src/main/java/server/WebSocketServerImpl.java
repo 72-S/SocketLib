@@ -1,11 +1,14 @@
 package server;
 
 import org.java_websocket.WebSocket;
+import org.java_websocket.server.DefaultSSLWebSocketServerFactory;
 import org.java_websocket.server.WebSocketServer;
 import org.java_websocket.handshake.ClientHandshake;
 import org.json.JSONObject;
 import org.slf4j.Logger;
+import utils.SSLUtils;
 
+import javax.net.ssl.SSLContext;
 import java.net.InetSocketAddress;
 import java.util.Collections;
 import java.util.HashSet;
@@ -52,6 +55,13 @@ public class WebSocketServerImpl implements ServerInterface {
                 logger.info("Server started on {}:{}", getAddress().getHostString(), getAddress().getPort());
             }
         };
+
+        try {
+            SSLContext sslContext = SSLUtils.createServerSSLContext();
+            server.setWebSocketFactory(new DefaultSSLWebSocketServerFactory(sslContext));
+        } catch (Exception e) {
+            logger.error("An error occurred: {}", e.getMessage());
+        }
 
         server.start();
     }

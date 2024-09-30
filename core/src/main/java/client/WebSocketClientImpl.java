@@ -3,9 +3,13 @@ package client;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
+import org.java_websocket.server.DefaultSSLWebSocketServerFactory;
 import org.json.JSONObject;
+import utils.SSLUtils;
 
 
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
 import java.net.URI;
 import java.util.logging.Logger;
 
@@ -23,7 +27,7 @@ public class WebSocketClientImpl implements ClientInterface {
     @Override
     public void connect(String address, int port) {
         try {
-            client = new WebSocketClient(new URI("ws://" + address + ":" + port)) {
+            client = new WebSocketClient(new URI("wss://" + address + ":" + port)) {
 
                 @Override
                 public void onOpen(ServerHandshake handshakedata) {
@@ -46,6 +50,10 @@ public class WebSocketClientImpl implements ClientInterface {
                     logger.severe("An error occurred: " + ex.getMessage());
                 }
             };
+
+            SSLContext sslContext = SSLUtils.createClientSSLContext();
+            SSLSocketFactory factory = sslContext.getSocketFactory();
+            client.setSocketFactory(factory);
 
             client.connect();
         } catch (Exception e) {
