@@ -3,7 +3,7 @@ package client;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
-import org.java_websocket.server.DefaultSSLWebSocketServerFactory;
+
 import org.json.JSONObject;
 import utils.SSLUtils;
 
