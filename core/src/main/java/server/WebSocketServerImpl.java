@@ -42,7 +42,6 @@ public class WebSocketServerImpl implements ServerInterface {
             @Override
             public void onMessage(WebSocket conn, String message) {
                 JSONObject jsonMessage = new JSONObject(message);
-                receiveMessage(jsonMessage);
             }
 
             @Override
@@ -78,18 +77,4 @@ public class WebSocketServerImpl implements ServerInterface {
         }
     }
 
-    @Override
-    public void sendMessage(JSONObject message) {
-        String msgString = message.toString();
-        synchronized (connections) {
-            for (WebSocket conn : connections) {
-                conn.send(msgString);
-            }
-        }
-    }
-
-    @Override
-    public void receiveMessage(JSONObject message) {
-        logger.info("Server received message: " + message.toString());
-    }
 }

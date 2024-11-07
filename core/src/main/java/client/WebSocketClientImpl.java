@@ -37,7 +37,6 @@ public class WebSocketClientImpl implements ClientInterface {
                 @Override
                 public void onMessage(String message) {
                     JSONObject jsonMessage = new JSONObject(message);
-                    receiveMessage(jsonMessage);
                 }
 
                 @Override
@@ -68,15 +67,6 @@ public class WebSocketClientImpl implements ClientInterface {
         }
     }
 
-    @Override
-    public void sendMessage(JSONObject message) {
-        if (client != null && client.isOpen()) {
-            client.send(message.toString());
-        }
-    }
-
-    @Override
-    public void receiveMessage(JSONObject message) {
-        logger.info("Client received message: " + message.toString());    }
+    
 }
 
