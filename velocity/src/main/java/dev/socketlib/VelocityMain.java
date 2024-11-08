@@ -1,21 +1,18 @@
 package dev.socketlib;
 
+import javax.inject.Inject;
+
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
-import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.plugin.Plugin;
-import org.slf4j.Logger;
-import server.WebSocketServerImpl;
+import com.velocitypowered.api.proxy.ProxyServer;
 
-
-import javax.inject.Inject;
 
 
 @Plugin(id = "socketlib", name = "SocketLib", version = "1.0.0", authors = "72-S")
 public class VelocityMain {
     private final ProxyServer server;
-    WebSocketServerImpl webSocketServer;
 
     private final Logger logger;
 
@@ -29,18 +26,14 @@ public class VelocityMain {
 
 
     @Subscribe
-    public void onProxyInitialization(final ProxyInitializeEvent event) {
+    public void onProxyInitialization(ProxyInitializeEvent event) {
         logger.info("SocketLib enabled");
-        webSocketServer = new WebSocketServerImpl(logger);
-        webSocketServer.startServer(8080, "localhost");
-
-
+        new Startup(server);
     }
 
     @Subscribe
     public void onProxyShutdown(ProxyShutdownEvent event) {
         logger.info("SocketLib disabled");
-        webSocketServer.stopServer(0);
     }
 
 

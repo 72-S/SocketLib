@@ -13,6 +13,7 @@ repositories {
 dependencies {
     implementation("org.java-websocket:Java-WebSocket:1.5.7")
     implementation("org.json:json:20240303")
+    implementation("org.yaml:snakeyaml:2.0")
     compileOnly("com.velocitypowered:velocity-api:3.3.0-SNAPSHOT")
     annotationProcessor("com.velocitypowered:velocity-api:3.3.0-SNAPSHOT")
     compileOnly(project(":core"))
